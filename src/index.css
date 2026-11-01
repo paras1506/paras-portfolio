@@ -1,0 +1,252 @@
+@import 'tailwindcss';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+
+/* Theme switches via [data-theme] on <html>, not the media query. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ---------- Design tokens (UI Guidelines § Color tokens) ---------- */
+:root,
+[data-theme='dark'] {
+  --bg: #0b0c0e;
+  --surface: #141619;
+  --surface-2: #1c1f23;
+  --line: #2a2e34;
+  --text: #edeef0;
+  --text-muted: #9aa3ae;
+  --text-faint: #6b7380;
+  --accent: #ff6a1a;
+  --on-accent: #0b0c0e;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  /* 3D materials read these via getComputedStyle */
+  --steel: #b8c0ca;
+  --ball: #e6eaee;
+  --cage: #2a2e34;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #f4f2ee;
+  --surface: #ffffff;
+  --surface-2: #ece9e3;
+  --line: #d8d4cc;
+  --text: #111315;
+  --text-muted: #5b636d;
+  --text-faint: #5b636d;
+  --accent: #b83a0a;
+  --on-accent: #ffffff;
+  --success: #15803d;
+  --warning: #a16207;
+  --danger: #b91c1c;
+  --steel: #8a929c;
+  --ball: #c9ced4;
+  --cage: #3a3f46;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-display: 'Clash Display', 'General Sans', system-ui, sans-serif;
+  --font-sans: 'General Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-seat: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ---------- Type scale (UI Guidelines § Typography) ---------- */
+@utility text-display-xl {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(48px, 9vw, 128px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+@utility text-display-l {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+@utility text-h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+@utility text-body-l {
+  font-size: 18px;
+  line-height: 1.6;
+}
+@utility text-spec {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- Layout ---------- */
+@utility container-site {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 20px;
+  @media (width >= 640px) {
+    padding-inline: 32px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 64px;
+  }
+  @media (width >= 1440px) {
+    padding-inline: 0;
+  }
+}
+@utility section-pad {
+  padding-block: 96px;
+  @media (width >= 1024px) {
+    padding-block: 160px;
+  }
+}
+
+/* ---------- Cards ---------- */
+@utility card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+@utility card-hover {
+  transition:
+    transform 240ms var(--ease-out),
+    border-color 240ms var(--ease-out);
+  &:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+  }
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    /* Faint engineering dot grid */
+    background-image: radial-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100dvh;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  /* Focus style everywhere: 2px accent outline, 3px offset, never removed. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Reveal animation (driven by data-reveal + IntersectionObserver).
+   Only hidden when JS is running, so pre-rendered HTML is never invisible. */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+html.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+html.reduce-motion [data-reveal] {
+  transform: none;
+  transition: opacity 120ms linear;
+  transition-delay: 0ms;
+}
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    transform: none;
+    transition: opacity 120ms linear;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+/* Page load: name, sub-line and CTAs rise 24px and fade in, staggered via --d. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+.hero-rise {
+  animation: hero-rise 600ms var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+html.reduce-motion .hero-rise {
+  animation: none;
+}
+
+/* 404: a single ball rolling to a stop */
+@keyframes nf-roll {
+  from {
+    transform: translateX(min(90vw, 26rem)) rotate(720deg);
+  }
+  to {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+.nf-ball {
+  animation: nf-roll 1.8s cubic-bezier(0.15, 0.85, 0.3, 1) both;
+}
+html.reduce-motion .nf-ball {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise,
+  .nf-ball {
+    animation: none;
+  }
+}

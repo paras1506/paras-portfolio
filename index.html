@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paras Wane · Full-stack and AI developer</title>
+    <meta name="description" content="Paras Wane builds websites and AI tools that small businesses use daily. Full-stack and AI developer, founder of Grovanta, Pune." />
+    <meta name="theme-color" content="#0B0C0E" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Paras Wane · Full-stack and AI developer" />
+    <meta property="og:description" content="Websites and AI tools that small businesses use daily." />
+    <meta property="og:image" content="/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Paras Wane",
+        "jobTitle": "Full-stack and AI developer",
+        "url": "%VITE_SITE_URL%/",
+        "email": "mailto:paraswane15@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Pune", "addressCountry": "IN" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Walchand College of Engineering, Sangli" },
+        "worksFor": { "@type": "Organization", "name": "Grovanta", "description": "AI-powered Business Growth" },
+        "knowsAbout": ["React", "Node.js", "Machine learning", "three.js", "Web development"]
+      }
+    </script>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600&f[]=general-sans@400,500&display=swap" />
+    <script>
+      // Restore theme before first paint to avoid a flash.
+      document.documentElement.classList.add('js')
+      try {
+        var t = localStorage.getItem('pw-theme')
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+        var m = localStorage.getItem('pw-reduce-motion')
+        if (m === '1' || (m === null && matchMedia('(prefers-reduced-motion: reduce)').matches))
+          document.documentElement.classList.add('reduce-motion')
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding:24px;font-family:sans-serif">Paras Wane — Full-stack and AI developer, founder of Grovanta.
+        <a href="/resume.pdf">Resume (PDF)</a> · <a href="mailto:paraswane15@gmail.com">Email</a></p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
